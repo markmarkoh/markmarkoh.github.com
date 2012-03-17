@@ -1,0 +1,159 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dynamic "table of contents" generation with jQuery - Mark Mark Oh</title>
+    <meta name="author" content="Mark DiMarco">
+
+    
+    <meta name="description" content="Dynamic "Table of Contents" Generation With jQuery A quick way to generate a dynamic table of contents, based on the sections as they appear in the &hellip;">
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Mark Mark Oh" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.png" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18243508-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<header class="inner"><div class="left">
+	<h1 class="left"><a href="/">Mark Mark Oh</a></h1><br />
+	<h3 class="left"><a href="/about-me">UI Developer at Bazaarvoice</a></h3>
+</div>
+<nav class="menu left"><ul class="main">
+	<li><a href="/about-me">About me</a></li>
+</ul>
+</nav>
+<div class="right">
+	<div class="social right">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/markmarkoh" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/markmarkoh" title="GitHub">GitHub</a>
+		
+	</div>
+</div>
+</header>
+	
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/markmarkoh">markmarkoh</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('markmarkoh', 4, false);
+	})(jQuery);
+</script>
+
+	<div id="content" class="inner"><article class="post">
+    <h1 class="title">Dynamic "Table of Contents" Generation With jQuery</h1>
+    <div class="entry"><p>A quick way to generate a dynamic table of contents, based on the sections as they appear in the content.</p>
+
+<div><script src='https://gist.github.com/958465.js?file='></script>
+<noscript><pre><code>$(function() {
+
+    var tocWrapper = $(&quot;#toc .wrapper&quot;);
+
+    $(&quot;#mainContainer h1&quot;).each(function(i,item) {
+    
+        $(&quot;&lt;a /&gt;&quot;)
+            .text( $(item).text() )
+            .attr(&quot;href&quot;,&quot;#&quot;)
+            .data(&quot;scrollTo&quot;,item)
+            .appendTo(tocWrapper)
+    
+    });
+
+});
+
+$(&quot;#toc a&quot;).live(&quot;click&quot;, function(e) {
+
+    $.scrollTo( $(this).data(&quot;scrollTo&quot;), {
+        duration: 300,
+        easing: &quot;swing&quot;
+    });
+    
+    e.preventDefault();
+    
+});</code></pre></noscript></div>
+
+
+<p>The first block loops through all the section headers (which are <code>&lt;h1&gt;</code>s), and injects them as anchor tags into the initially empty TOC wrapper DIV.</p>
+
+<p><code>$("&lt;a/&gt;")</code> is sexy jQuery syntax to create a fresh DOM element.</p>
+
+<p><code>.data()</code> is a nice way to store metadata about a DOM element. It&#8217;s nice because it doesn&#8217;t store the data *in* the DOM, which is notoriously slow.</p>
+
+<p>The second block just adds the click handler and uses the $.scrollTo plugin for some fancy scrolling animation.</p>
+
+<p>It&#8217;s small, but neat, and it removes the need to maintain a duplicate list of section names.</p>
+
+<p>Originally found on <a href="http://taitems.github.com/Front-End-Development-Guidelines/">Frontend Dev Guidelines</a></p>
+</div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-05T00:00:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2011</time></div>
+        <div class="tags">
+
+</div>
+        
+    </div>
+</article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4eb4a0c47196e907"></script>
+</div>
+</div>
+	<footer class="inner">Copyright &copy; 2012 Mark Mark Oh</footer>
+	<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>
