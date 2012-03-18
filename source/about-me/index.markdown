@@ -30,7 +30,7 @@ Before joining Bazaarvoice I founded one startup, [Press 9 For More Options][8],
 
 Untech
 --------
-I listen to [music][9] nonstop, eat gourmet trailer food and rarely miss an episode of *the Daily Show*. I'm also trying to read all the biographies of 20<sup>th</sup> century phsysists and other famous scientists. 
+I listen to [music][9] nonstop, eat gourmet trailer food and rarely miss an episode of *the Daily Show*.
 
 <div style="overflow:hidden;">{% img right clear http://markdimarco.com/profile.png 500 %} </div>
 

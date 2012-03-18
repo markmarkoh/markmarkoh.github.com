@@ -1,7 +1,11 @@
 article{
 	border-bottom: 1px solid $gray04;
 	border-top: 1px solid $gray05;
-	padding: 30px 0;
+	padding: 30px 10px;
+	background: white;
+	box-shadow: #888 1px 1px 8px;
+	margin: 20px 0 10px 0;
+	color: #333;
 	position: relative;
 	@media screen and (max-width: 800px){
 		padding-bottom: 15px;
@@ -16,6 +20,7 @@ article{
 		a{
 			color: $gray01;
 		}
+		border-bottom: 1px dotted #CCC;
 	}
 	.entry{
 		line-height: 2;
