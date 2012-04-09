@@ -4,7 +4,7 @@
   <title><![CDATA[Mark Mark Oh]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-04-09T00:02:21-05:00</updated>
+  <updated>2012-04-09T00:16:01-05:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[URL managed, state-based single page applications with Ember.js & Director.]]></title>
+    <title type="html"><![CDATA[WIP URL managed, state-based single page applications with Ember.js & Director.]]></title>
     <link href="http://markmarkoh.github.com/blog/url-managed/"/>
     <updated>2012-04-08T23:11:00-05:00</updated>
     <id>http://markmarkoh.github.com/blog/url-managed</id>
@@ -24,15 +24,42 @@
 
 <h2>Director</h2>
 
-<p>Director[link], part of Nodejitsu&#8217;s Flatiron framework, is a URL routing library that is capable of running in the browser. It uses hashChange ( and soon, pushState ) to change URLs and execute the appropriate Javascript. Perfect for single paged apps.</p>
+<p><a href="http://flatironjs.org/" title="flatiron">Director</a>, part of Nodejitsu&#8217;s Flatiron framework, is a URL routing library that is capable of running in the browser. It uses hashChange ( and soon, pushState ) to change URLs and execute the appropriate Javascript. Perfect for single paged apps.</p>
 
 <p>If you&#8217;ve used Django (urls.py), Sinatra, Rails, Express for Node - this should look familiar. Keep in mind it&#8217;s running in the browser.</p>
 
-<p>[director code example]</p>
+<div><script src='https://gist.github.com/2341574.js?file='></script>
+<noscript><pre><code>    /* Director's routes config
+
+      routes that have segments that start with colons, 
+      like /lists/:listType, will pass in the variable to
+      the callback.
+    */
+
+    var routes = {
+      '/app': function() {
+        ;
+      },
+
+      '/app/lists/:listType': function( listType ) {
+        ;
+      },
+
+      // example of a more complicated route.
+      'app/lists/:listType/page/:pageNumber': function( listType, pageNumber ) {
+        ;
+      }
+    };
+
+
+    //configure and init our Director Router
+    var router = Router( routes ).configure();
+    router.init();</code></pre></noscript></div>
+
 
 <h2>Ember</h2>
 
-<p>Ember.js is a project run by Tom Dale and Yehuda Katz. It&#8217;s a client-side MVC framework - the benefits of using Ember.js (or Backbone.js) go beyond the scope of this article.</p>
+<p><a href="http://emberjs.com" title="ember js">Ember.js</a> is a project run by Tom Dale and Yehuda Katz. It&#8217;s a client-side MVC framework - the benefits of using Ember.js (or Backbone.js) go beyond the scope of this article.</p>
 
 <p>One of Ember.js&#8217;s most useful, yet least documented features, is Ember.StateManager.</p>
 
@@ -42,7 +69,49 @@
 
 <p><code>Ember.StateManager.goToState ( strStateName )</code> if enough to switch the state. Pretty easy.</p>
 
-<p>[example StateManager code, with switch state].</p>
+<div><script src='https://gist.github.com/2341576.js?file='></script>
+<noscript><pre><code>    /* Instantiate a StateManager for our application
+       and give it a few example states. 
+    */
+    App.stateManager = Ember.StateManager.create({
+
+      //Swap state within this element
+      rootElement: &quot;#appRoot&quot;,
+
+      //specify a few sample states
+      overview: Ember.ViewState.create({
+          view: App.Overview
+      }),
+
+      highestRated: Ember.ViewState.create({
+          view: App.HighestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy( App.productList.content, function( product ) { return 0 - product.rating })
+            )
+          }
+      }),
+
+      lowestRated: Ember.ViewState.create({
+          view: App.LowestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy(App.productList.content, function( product ) { return product.rating })
+            )
+          }
+      })
+    });</code></pre></noscript></div>
+
 
 <h2>Hijack</h2>
 
@@ -50,13 +119,15 @@
 
 <p>This let&#8217;s us keep our markup semantically pure - we don&#8217;t have to add click handlers everywhere, just classic <code>&lt;a href="http://markmarkoh.github.com/product/10101/"&gt;Product 10101&lt;/a&gt;</code>. Perfect for porting an existing application.</p>
 
+<h2>All together</h2>
+
 <p>A user clicks a link - Director changes the URL and runs a callback that updates Ember&#8217;s current state.</p>
 
 <p>Now that user can refresh the page, or share the link, and Director runs a callback that updates Ember&#8217;s current state.</p>
 
 <p>Effectively, URLs are controlling the state of our application.</p>
 
-<p>Check out the sample application, and source[github].</p>
+<p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
 
 <p><em>Notes: I used Director instead of an user contributed addon, SproutCore Routes, because I wanted to keep my URL routing and application decoupled. Checkout Sproutcore Routes if you&#8217;d rather use that.</em></p>
 ]]></content>
