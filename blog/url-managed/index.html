@@ -7,7 +7,7 @@
     <meta name="author" content="Mark DiMarco">
 
     
-    <meta name="description" content="WIP URL Managed, State-based Single Page Applications With Ember.js & Director. [Bazaarvoice Intro] A drawback of some single paged apps is when you &hellip;">
+    <meta name="description" content="WIP URL Managed, State-based Single Page Applications With Ember.js & Director. Check out the sample application, and source on github. One of the &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -73,9 +73,11 @@
 
 	<div id="content" class="inner"><article class="post">
     <h1 class="title">WIP URL Managed, State-based Single Page Applications With Ember.js & Director.</h1>
-    <div class="entry"><p>[Bazaarvoice Intro]</p>
+    <div class="entry"><p><a href="/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
 
-<p> A drawback of some single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one vague URL ( http://example.com/app ).</p>
+<p> One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ).</p>
+
+<p> Outlined here is an architecture to maintain distinct URLs with Ember.js applications.</p>
 
 <h2>Director</h2>
 
@@ -178,9 +180,9 @@
 
 <p>A user clicks a link - Director changes the URL and runs a callback that updates Ember&#8217;s current state.</p>
 
-<p>Now that user can refresh the page, or share the link, and Director runs a callback that updates Ember&#8217;s current state.</p>
+<p>Now that user can refresh the page, or share the link, and the app <strong>follows the same path as it did when somebody clicked a link</strong>.</p>
 
-<p>Effectively, URLs are controlling the state of our application.</p>
+<p>Effectively, URLs are controlling the state of our application, not click events.</p>
 
 <p><a href="/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
 

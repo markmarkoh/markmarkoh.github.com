@@ -4,7 +4,7 @@
   <title><![CDATA[Mark Mark Oh]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-04-09T00:16:01-05:00</updated>
+  <updated>2012-04-09T00:24:47-05:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -18,9 +18,11 @@
     <link href="http://markmarkoh.github.com/blog/url-managed/"/>
     <updated>2012-04-08T23:11:00-05:00</updated>
     <id>http://markmarkoh.github.com/blog/url-managed</id>
-    <content type="html"><![CDATA[<p>[Bazaarvoice Intro]</p>
+    <content type="html"><![CDATA[<p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
 
-<p> A drawback of some single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one vague URL ( http://example.com/app ).</p>
+<p> One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ).</p>
+
+<p> Outlined here is an architecture to maintain distinct URLs with Ember.js applications.</p>
 
 <h2>Director</h2>
 
@@ -123,9 +125,9 @@
 
 <p>A user clicks a link - Director changes the URL and runs a callback that updates Ember&#8217;s current state.</p>
 
-<p>Now that user can refresh the page, or share the link, and Director runs a callback that updates Ember&#8217;s current state.</p>
+<p>Now that user can refresh the page, or share the link, and the app <strong>follows the same path as it did when somebody clicked a link</strong>.</p>
 
-<p>Effectively, URLs are controlling the state of our application.</p>
+<p>Effectively, URLs are controlling the state of our application, not click events.</p>
 
 <p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
 
