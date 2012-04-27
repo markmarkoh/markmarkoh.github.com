@@ -4,7 +4,7 @@
   <title><![CDATA[Mark Mark Oh]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-04-09T00:24:47-05:00</updated>
+  <updated>2012-04-27T13:05:45-05:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery .live() gotchya]]></title>
+    <link href="http://markmarkoh.github.com/blog/jquery-live-gotchya/"/>
+    <updated>2012-04-27T12:51:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/jquery-live-gotchya</id>
+    <content type="html"><![CDATA[<p>I was recently trying to fix a bug somebody introduced in our app, and after a bunch of digging I found the misunderstanding of <code>$.fn.live</code>.</p>
+
+<p><em>tldr: cacheing a selector, then attaching a <code>$.fn.live</code> event listener, then attempting to use that cached selector (accessed via closure) can break.</em></p>
+
+<div><script src='https://gist.github.com/2511352.js?file='></script>
+<noscript><pre><code>// $.fn.live misuse
+(function() {
+
+// cache all elements that match this selector *as they exist on the page right now*
+
+// let's say this is empty at this point in time
+var $posts = $(&quot;.posts&quot;);
+
+// set up a click listener. this is totally valid with $.fn.live, 
+// any new &quot;.posts&quot; that get added to the DOM will automatically respond to this 
+$posts.live('click', function() {
+
+   //update all the HTML of all the &quot;.posts&quot;, this selector is still *EMPTY*
+   $posts.html(&quot;this doesn't work the way you might expect&quot;);
+
+});
+
+})();</code></pre></noscript></div>
+
+
+<p>The cached selector is <strong>not live</strong>, but attaching the event handler via <code>$.fn.live</code> works.</p>
+
+<p>For this to work as expected, you&#8217;d have to do a re-selection within the event handler, instead of trying to use a cached selector.</p>
+
+<p>Good thing that <a href="http://api.jquery.com/live/" title="$.fn.live">$.fn.live is deprecated as of jQuery 1.7</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WIP URL managed, state-based single page applications with Ember.js & Director.]]></title>
