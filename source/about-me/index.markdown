@@ -18,7 +18,7 @@ I work primarily with:
   *  [jQuery][5]
   *  [Modernizr][6]
 
- *Customer Intelligence* is a large-scale HTML5 data vizualization & data analysis application. We analyze and interpret product reviews and offer insights based on segment analysis, natural language processing and trend tracking.
+ *Customer Intelligence* is a large-scale HTML5 data visualization & data analysis application. We analyze and interpret product reviews and offer insights based on segment analysis, natural language processing and trend tracking.
 
  Since releasing a v1, I've shifted gears to rapid prototyping future features and performing targetted user testing.
 
