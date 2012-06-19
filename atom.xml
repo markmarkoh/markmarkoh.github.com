@@ -4,7 +4,7 @@
   <title><![CDATA[Mark Mark Oh]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-04-27T13:05:45-05:00</updated>
+  <updated>2012-06-18T23:46:43-05:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Conway's Game of Life in D3.js]]></title>
+    <link href="http://markmarkoh.github.com/blog/conways-game-of-life-in-d3-dot-js/"/>
+    <updated>2012-06-18T23:06:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/conways-game-of-life-in-d3-dot-js</id>
+    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life" title="Conway's Game of Life">Conway&#8217;s Game of Life</a> is a classic computer science puzzle, often asked during programming interviews.</p>
+
+<p><code>for</code> loops, <code>if</code> statements, multi-dimensional arrays oh-my.</p>
+
+<p>What does Conway&#8217;s Game of Life have to do with UI? <em>Absolutely nothing</em>.</p>
+
+<p>This year I helped put together a charity event called <a href="http://rhokaustin.org" title="RHoK Austin event page">RHoK Austin</a>, Random Hacks of Kindness. My job was to put together the event page.</p>
+
+<p>A few decisions we made:</p>
+
+<ul>
+<li>Single page, long-form site: √</li>
+<li>Responsive design for mobile use: √</li>
+<li>Twitter integration: √</li>
+</ul>
+
+
+<p>and finally:</p>
+
+<ul>
+<li>over-the-top easter egg SVG implementation of Conway&#8217;s Game of Life in <a href="http://d3js.org/" title="D3.js">D3.js</a> that advances the algorithm as you scroll: <strong>nailed it!</strong></li>
+</ul>
+
+
+<p><img class="[]" src="http://markmarkoh.github.com/images/rhokaustin.png"></p>
+
+<p>We put the <strong>Random</strong> in Random Hacks of Kindness. &copy;</p>
+
+<p>Live demo: <a href="http://rhokaustin.org" title="RHoK Austin event page">http://rhokaustin.org</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[jQuery .live() gotchya]]></title>
