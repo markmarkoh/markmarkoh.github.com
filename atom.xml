@@ -4,7 +4,7 @@
   <title><![CDATA[Mark Mark Oh]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-06-19T00:04:34-05:00</updated>
+  <updated>2012-06-21T19:21:43-05:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[D3.js animated map visualization]]></title>
+    <link href="http://markmarkoh.github.com/blog/d3-dot-js-animated-map-visualization/"/>
+    <updated>2012-06-21T18:35:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/d3-dot-js-animated-map-visualization</id>
+    <content type="html"><![CDATA[<p>When you walk into <a href="http://www.bazaarvoice.com/" title="Bazaarvoice, Inc">Bazaarvoice</a>&#8217;s office in Austin, TX, you can&#8217;t miss a giant screen in the main lobby displaying some interesting metrics regarding our business.</p>
+
+<p><img class="[]" src="http://markmarkoh.github.com/images/someword.png"></p>
+
+<p>Part of that display is an SVG map of the world using <a href="http://d3js.org/" title="D3.js">D3.js</a> (&hearts; d3.geo), and all day long we&#8217;re watching it connect the people that ask questions on our client&#8217;s sites to the people that answer them.</p>
+
+<p>The map I made takes a series of data, including the time and geolocations of the questioners and answerers. I animate an arc connecting to connect the two points.</p>
+
+<iframe src="http://player.vimeo.com/video/44433253" width="500" height="231" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+
+<p>Drawing a world map in D3.js:</p>
+
+<div><script src='https://gist.github.com/2969316.js?file='></script>
+<noscript><pre><code>(function(window) {
+  var data,
+      xy = d3
+            .geo
+            .equirectangular()
+            .scale($('#map_container').width())
+            .translate([$('#map_container').width() / 2, $('#map_container').height() / 2]),
+      path = d3
+              .geo
+              .path()
+              .projection(xy),
+      svg = d3
+              .select('#map_container')
+              .append('svg:svg'),
+      countries = svg
+                    .append('svg:g')
+                    .attr('id', 'countries');
+
+
+  /* World Map */
+  countries.selectAll('path')
+    .data(window.countries_data.features) // assuming there is a global named countries_data
+    .enter()
+    .append('svg:path')
+    .attr('d', path)
+   .attr('fill', 'rgba(29,91,85,1)')
+   .attr('stroke', 'rgba(29,91,85,1)')
+   .attr('stroke-width', 1);
+
+}(this);</code></pre></noscript></div>
+
+
+<p><a href="https://gist.github.com/2969317" title="World Map Data JSON">Grab the world data json data here</a></p>
+
+<p><strong>D3.js allows us to use pure latitude/longitude coordinates the entire time. From drawing the map to pinpointing the location of the users, we never have to figure out the X/Y coordinates on the map. Major win.</strong></p>
+
+<h6>Disclaimer: The views / words expressed in this post are my own and not representative of my employer</h6>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Conway's Game of Life in D3.js]]></title>

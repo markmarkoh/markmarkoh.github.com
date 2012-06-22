@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>D3.js animated map visualization - Mark Mark Oh</title>
+    <meta name="author" content="Mark DiMarco">
+
+    
+    <meta name="description" content="D3.js Animated Map Visualization When you walk into Bazaarvoice&#8217;s office in Austin, TX, you can&#8217;t miss a giant screen in the main lobby &hellip;">
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Mark Mark Oh" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.png" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18243508-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<header class="inner"><div class="left">
+	<h1 class="left"><a href="/">Mark Mark Oh</a></h1><br />
+	<h3 class="left"><a href="/about-me">UI Developer at Bazaarvoice</a></h3>
+</div>
+<nav class="menu left"><ul class="main">
+	<li><a href="/about-me">About me</a></li>
+</ul>
+</nav>
+<div class="right">
+	<div class="social right">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/markmarkoh" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/markmarkoh" title="GitHub">GitHub</a>
+		
+	</div>
+</div>
+</header>
+	
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/markmarkoh">markmarkoh</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('markmarkoh', 4, false);
+	})(jQuery);
+</script>
+
+	<div id="content" class="inner"><article class="post">
+    <h1 class="title">D3.js Animated Map Visualization</h1>
+    <div class="entry"><p>When you walk into <a href="http://www.bazaarvoice.com/" title="Bazaarvoice, Inc">Bazaarvoice</a>&#8217;s office in Austin, TX, you can&#8217;t miss a giant screen in the main lobby displaying some interesting metrics regarding our business.</p>
+
+<p><img class="[]" src="/images/someword.png"></p>
+
+<p>Part of that display is an SVG map of the world using <a href="http://d3js.org/" title="D3.js">D3.js</a> (&hearts; d3.geo), and all day long we&#8217;re watching it connect the people that ask questions on our client&#8217;s sites to the people that answer them.</p>
+
+<p>The map I made takes a series of data, including the time and geolocations of the questioners and answerers. I animate an arc connecting to connect the two points.</p>
+
+<iframe src="http://player.vimeo.com/video/44433253" width="500" height="231" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+
+<p>Drawing a world map in D3.js:</p>
+
+<div><script src='https://gist.github.com/2969316.js?file='></script>
+<noscript><pre><code>(function(window) {
+  var data,
+      xy = d3
+            .geo
+            .equirectangular()
+            .scale($('#map_container').width())
+            .translate([$('#map_container').width() / 2, $('#map_container').height() / 2]),
+      path = d3
+              .geo
+              .path()
+              .projection(xy),
+      svg = d3
+              .select('#map_container')
+              .append('svg:svg'),
+      countries = svg
+                    .append('svg:g')
+                    .attr('id', 'countries');
+
+
+  /* World Map */
+  countries.selectAll('path')
+    .data(window.countries_data.features) // assuming there is a global named countries_data
+    .enter()
+    .append('svg:path')
+    .attr('d', path)
+   .attr('fill', 'rgba(29,91,85,1)')
+   .attr('stroke', 'rgba(29,91,85,1)')
+   .attr('stroke-width', 1);
+
+}(this);</code></pre></noscript></div>
+
+
+<p><a href="https://gist.github.com/2969317" title="World Map Data JSON">Grab the world data json data here</a></p>
+
+<p><strong>D3.js allows us to use pure latitude/longitude coordinates the entire time. From drawing the map to pinpointing the location of the users, we never have to figure out the X/Y coordinates on the map. Major win.</strong></p>
+
+<h6>Disclaimer: The views / words expressed in this post are my own and not representative of my employer</h6>
+</div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-21T18:35:00-05:00" pubdate data-updated="true">Jun 21<span>st</span>, 2012</time></div>
+        <div class="tags">
+
+</div>
+        
+    </div>
+</article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4eb4a0c47196e907"></script>
+</div>
+</div>
+	<footer class="inner">Copyright &copy; 2012 Mark Mark Oh</footer>
+	<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>
