@@ -22,8 +22,7 @@ A few decisions we made:
 
 and finally:
 
-* over-the-top easter egg SVG implementation of Conway's Game of Life in [D3.js][2] that advances the algorithm as you scroll: **nailed it!**
-
+* over-the-top easter egg SVG implementation of Conway's Game of Life in [D3.js][2] that advances the algorithm as you scroll: √
 Live demo: [http://rhokaustin.org][1]
 -----
 

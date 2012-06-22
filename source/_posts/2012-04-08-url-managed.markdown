@@ -6,6 +6,9 @@ comments: true
 categories: 
 ---
 
+###Update: This is soon-to-be deprecated due to Ember.Router!
+
+
 [Check out the sample application][0], and [source on github][3]. 
 
  One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ). 
