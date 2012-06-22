@@ -4,7 +4,7 @@
   <title><![CDATA[Mark Mark Oh]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-06-21T19:21:43-05:00</updated>
+  <updated>2012-06-21T19:48:18-05:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -97,11 +97,12 @@
 <p>and finally:</p>
 
 <ul>
-<li>over-the-top easter egg SVG implementation of Conway&#8217;s Game of Life in <a href="http://d3js.org/" title="D3.js">D3.js</a> that advances the algorithm as you scroll: <strong>nailed it!</strong></li>
+<li>over-the-top easter egg SVG implementation of Conway&#8217;s Game of Life in <a href="http://d3js.org/" title="D3.js">D3.js</a> that advances the algorithm as you scroll: √
+Live demo: <a href="http://rhokaustin.org" title="RHoK Austin event page">http://rhokaustin.org</a></li>
 </ul>
 
 
-<h2>Live demo: <a href="http://rhokaustin.org" title="RHoK Austin event page">http://rhokaustin.org</a></h2>
+<hr />
 
 <p><img class="[]" src="http://markmarkoh.github.com/images/rhokaustin.png"></p>
 
@@ -156,7 +157,9 @@ $posts.live('click', function() {
     <link href="http://markmarkoh.github.com/blog/url-managed/"/>
     <updated>2012-04-08T23:11:00-05:00</updated>
     <id>http://markmarkoh.github.com/blog/url-managed</id>
-    <content type="html"><![CDATA[<p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+    <content type="html"><![CDATA[<h3>Update: This is soon-to-be deprecated due to Ember.Router!</h3>
+
+<p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
 
 <p> One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ).</p>
 
