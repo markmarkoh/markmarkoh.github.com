@@ -3,7 +3,8 @@ layout: post
 title: "Conway's Game of Life in D3.js"
 date: 2012-06-18 23:06
 comments: true
-categories: 
+categories:
+published: false
 ---
 
 [Conway's Game of Life][0] is a classic computer science puzzle, often asked during programming interviews. 
@@ -23,6 +24,7 @@ A few decisions we made:
 and finally:
 
 * over-the-top easter egg SVG implementation of Conway's Game of Life in [D3.js][2] that advances the algorithm as you scroll: √
+
 Live demo: [http://rhokaustin.org][1]
 -----
 
