@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Mark Mark Oh]]></title>
+  <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
+  <link href="http://markmarkoh.github.com/"/>
+  <updated>2012-06-21T19:48:18-05:00</updated>
+  <id>http://markmarkoh.github.com/</id>
+  <author>
+    <name><![CDATA[Mark DiMarco]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[D3.js animated map visualization]]></title>
+    <link href="http://markmarkoh.github.com/blog/d3-dot-js-animated-map-visualization/"/>
+    <updated>2012-06-21T18:35:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/d3-dot-js-animated-map-visualization</id>
+    <content type="html"><![CDATA[<p>When you walk into <a href="http://www.bazaarvoice.com/" title="Bazaarvoice, Inc">Bazaarvoice</a>&#8217;s office in Austin, TX, you can&#8217;t miss a giant screen in the main lobby displaying some interesting metrics regarding our business.</p>
+
+<p><img class="[]" src="http://markmarkoh.github.com/images/someword.png"></p>
+
+<p>Part of that display is an SVG map of the world using <a href="http://d3js.org/" title="D3.js">D3.js</a> (&hearts; d3.geo), and all day long we&#8217;re watching it connect the people that ask questions on our client&#8217;s sites to the people that answer them.</p>
+
+<p>The map I made takes a series of data, including the time and geolocations of the questioners and answerers. I animate an arc connecting to connect the two points.</p>
+
+<iframe src="http://player.vimeo.com/video/44433253" width="500" height="231" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+
+<p>Drawing a world map in D3.js:</p>
+
+<div><script src='https://gist.github.com/2969316.js?file='></script>
+<noscript><pre><code>(function(window) {
+  var data,
+      xy = d3
+            .geo
+            .equirectangular()
+            .scale($('#map_container').width())
+            .translate([$('#map_container').width() / 2, $('#map_container').height() / 2]),
+      path = d3
+              .geo
+              .path()
+              .projection(xy),
+      svg = d3
+              .select('#map_container')
+              .append('svg:svg'),
+      countries = svg
+                    .append('svg:g')
+                    .attr('id', 'countries');
+
+
+  /* World Map */
+  countries.selectAll('path')
+    .data(window.countries_data.features) // assuming there is a global named countries_data
+    .enter()
+    .append('svg:path')
+    .attr('d', path)
+   .attr('fill', 'rgba(29,91,85,1)')
+   .attr('stroke', 'rgba(29,91,85,1)')
+   .attr('stroke-width', 1);
+
+}(this);</code></pre></noscript></div>
+
+
+<p><a href="https://gist.github.com/2969317" title="World Map Data JSON">Grab the world data json data here</a></p>
+
+<p><strong>D3.js allows us to use pure latitude/longitude coordinates the entire time. From drawing the map to pinpointing the location of the users, we never have to figure out the X/Y coordinates on the map. Major win.</strong></p>
+
+<h6>Disclaimer: The views / words expressed in this post are my own and not representative of my employer</h6>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Conway's Game of Life in D3.js]]></title>
+    <link href="http://markmarkoh.github.com/blog/conways-game-of-life-in-d3-dot-js/"/>
+    <updated>2012-06-18T23:06:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/conways-game-of-life-in-d3-dot-js</id>
+    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life" title="Conway's Game of Life">Conway&#8217;s Game of Life</a> is a classic computer science puzzle, often asked during programming interviews.</p>
+
+<p><code>for</code> loops, <code>if</code> statements, multi-dimensional arrays oh-my.</p>
+
+<p>What does Conway&#8217;s Game of Life have to do with UI? <em>Absolutely nothing</em>.</p>
+
+<p>This year I helped put together a charity event called <a href="http://rhokaustin.org" title="RHoK Austin event page">RHoK Austin</a>, Random Hacks of Kindness. My job was to put together the event page.</p>
+
+<p>A few decisions we made:</p>
+
+<ul>
+<li>Single page, long-form site: √</li>
+<li>Responsive design for mobile use: √</li>
+<li>Twitter integration: √</li>
+</ul>
+
+
+<p>and finally:</p>
+
+<ul>
+<li>over-the-top easter egg SVG implementation of Conway&#8217;s Game of Life in <a href="http://d3js.org/" title="D3.js">D3.js</a> that advances the algorithm as you scroll: √
+Live demo: <a href="http://rhokaustin.org" title="RHoK Austin event page">http://rhokaustin.org</a></li>
+</ul>
+
+
+<hr />
+
+<p><img class="[]" src="http://markmarkoh.github.com/images/rhokaustin.png"></p>
+
+<p>We put the <strong>Random</strong> in Random Hacks of Kindness. &copy;</p>
+
+<h2>Live demo: <a href="http://rhokaustin.org" title="RHoK Austin event page">http://rhokaustin.org</a></h2>
+
+<p>Source code for the entire site <a href="https://github.com/markmarkoh/rhok" title="repo">here</a>, or jump right to the D3.js portion <a href="https://github.com/markmarkoh/rhok/blob/master/js/conway.js" title="D3.js goodness">here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery .live() gotchya]]></title>
+    <link href="http://markmarkoh.github.com/blog/jquery-live-gotchya/"/>
+    <updated>2012-04-27T12:51:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/jquery-live-gotchya</id>
+    <content type="html"><![CDATA[<p>I was recently trying to fix a bug somebody introduced in our app, and after a bunch of digging I found the misunderstanding of <code>$.fn.live</code>.</p>
+
+<p><em>tldr: cacheing a selector, then attaching a <code>$.fn.live</code> event listener, then attempting to use that cached selector (accessed via closure) can break.</em></p>
+
+<div><script src='https://gist.github.com/2511352.js?file='></script>
+<noscript><pre><code>// $.fn.live misuse
+(function() {
+
+// cache all elements that match this selector *as they exist on the page right now*
+
+// let's say this is empty at this point in time
+var $posts = $(&quot;.posts&quot;);
+
+// set up a click listener. this is totally valid with $.fn.live, 
+// any new &quot;.posts&quot; that get added to the DOM will automatically respond to this 
+$posts.live('click', function() {
+
+   //update all the HTML of all the &quot;.posts&quot;, this selector is still *EMPTY*
+   $posts.html(&quot;this doesn't work the way you might expect&quot;);
+
+});
+
+})();</code></pre></noscript></div>
+
+
+<p>The cached selector is <strong>not live</strong>, but attaching the event handler via <code>$.fn.live</code> works.</p>
+
+<p>For this to work as expected, you&#8217;d have to do a re-selection within the event handler, instead of trying to use a cached selector.</p>
+
+<p>Good thing that <a href="http://api.jquery.com/live/" title="$.fn.live">$.fn.live is deprecated as of jQuery 1.7</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WIP URL managed, state-based single page applications with Ember.js & Director.]]></title>
+    <link href="http://markmarkoh.github.com/blog/url-managed/"/>
+    <updated>2012-04-08T23:11:00-05:00</updated>
+    <id>http://markmarkoh.github.com/blog/url-managed</id>
+    <content type="html"><![CDATA[<h3>Update: This is soon-to-be deprecated due to Ember.Router!</h3>
+
+<p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+
+<p> One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ).</p>
+
+<p> Outlined here is an architecture to maintain distinct URLs with Ember.js applications.</p>
+
+<h2>Director</h2>
+
+<p><a href="http://flatironjs.org/" title="flatiron">Director</a>, part of Nodejitsu&#8217;s Flatiron framework, is a URL routing library that is capable of running in the browser. It uses hashChange ( and soon, pushState ) to change URLs and execute the appropriate Javascript. Perfect for single paged apps.</p>
+
+<p>If you&#8217;ve used Django (urls.py), Sinatra, Rails, Express for Node - this should look familiar. Keep in mind it&#8217;s running in the browser.</p>
+
+<div><script src='https://gist.github.com/2341574.js?file='></script>
+<noscript><pre><code>    /* Director's routes config
+
+      routes that have segments that start with colons, 
+      like /lists/:listType, will pass in the variable to
+      the callback.
+    */
+
+    var routes = {
+      '/app': function() {
+        ;
+      },
+
+      '/app/lists/:listType': function( listType ) {
+        ;
+      },
+
+      // example of a more complicated route.
+      'app/lists/:listType/page/:pageNumber': function( listType, pageNumber ) {
+        ;
+      }
+    };
+
+
+    //configure and init our Director Router
+    var router = Router( routes ).configure();
+    router.init();</code></pre></noscript></div>
+
+
+<h2>Ember</h2>
+
+<p><a href="http://emberjs.com" title="ember js">Ember.js</a> is a project run by Tom Dale and Yehuda Katz. It&#8217;s a client-side MVC framework - the benefits of using Ember.js (or Backbone.js) go beyond the scope of this article.</p>
+
+<p>One of Ember.js&#8217;s most useful, yet least documented features, is Ember.StateManager.</p>
+
+<p>Ember.StateManager is easy to use - you need a rootElement (defaults to <code>body</code>) and a few distinct <code>Ember.ViewStates</code>, which at their simplest - just need a <code>Ember.View</code>.</p>
+
+<p>Switching between states will remove the <code>currentState</code> view, and insert the new state&#8217;s view, and run appropriate <code>enter</code>/<code>exit</code> events if you wanted.</p>
+
+<p><code>Ember.StateManager.goToState ( strStateName )</code> if enough to switch the state. Pretty easy.</p>
+
+<div><script src='https://gist.github.com/2341576.js?file='></script>
+<noscript><pre><code>    /* Instantiate a StateManager for our application
+       and give it a few example states. 
+    */
+    App.stateManager = Ember.StateManager.create({
+
+      //Swap state within this element
+      rootElement: &quot;#appRoot&quot;,
+
+      //specify a few sample states
+      overview: Ember.ViewState.create({
+          view: App.Overview
+      }),
+
+      highestRated: Ember.ViewState.create({
+          view: App.HighestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy( App.productList.content, function( product ) { return 0 - product.rating })
+            )
+          }
+      }),
+
+      lowestRated: Ember.ViewState.create({
+          view: App.LowestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy(App.productList.content, function( product ) { return product.rating })
+            )
+          }
+      })
+    });</code></pre></noscript></div>
+
+
+<h2>Hijack</h2>
+
+<p>Hijacker takes a jQuery Anchor tag selector (e.g. <code>.container a[href]</code>), and &#8220;hijacks&#8221; click events to push the new URL into Director instead of allowing a page jump.</p>
+
+<p>This let&#8217;s us keep our markup semantically pure - we don&#8217;t have to add click handlers everywhere, just classic <code>&lt;a href="http://markmarkoh.github.com/product/10101/"&gt;Product 10101&lt;/a&gt;</code>. Perfect for porting an existing application.</p>
+
+<h2>All together</h2>
+
+<p>A user clicks a link - Director changes the URL and runs a callback that updates Ember&#8217;s current state.</p>
+
+<p>Now that user can refresh the page, or share the link, and the app <strong>follows the same path as it did when somebody clicked a link</strong>.</p>
+
+<p>Effectively, URLs are controlling the state of our application, not click events.</p>
+
+<p><a href="http://markmarkoh.github.com/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+
+<p><em>Notes: I used Director instead of an user contributed addon, SproutCore Routes, because I wanted to keep my URL routing and application decoupled. Checkout Sproutcore Routes if you&#8217;d rather use that.</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tufte's slope graphs in SVG using D3.js]]></title>
+    <link href="http://markmarkoh.github.comtuftes-slope-graphs-in-svg-using-d3js"/>
+    <updated>2011-08-04T00:00:00-05:00</updated>
+    <id>http://markmarkoh.github.com./tuftes-slope-graphs-in-svg-using-d3js</id>
+    <content type="html"><![CDATA[<p>There was recently some buzz regarding a graph invented by one of the godfathers of visualizations, Edward Tufte, in the iconic 1983 book &#8217;<a href="http://www.edwardtufte.com/tufte/books_vdqi" title="visual display of quantitative information">The Visual Display of Quantitative Information</a>&#8217; (p. 158).</p>
+
+<p>You can see a <a href="http://charliepark.org/slopegraphs/#the_tablegraphic" title="charlie park's slope graphs">scanned copy of the graph here</a>, along with an interesting discussion regarding the chart, it&#8217;s history and different versions of it.</p>
+
+<p>I decided to recreate the graph dynamically for the browser using an SVG, which is something you&#8217;ll need a semi-advanced browser to see. With a library named <a href="http://mbostock.github.com/d3/" title="d3.js svg javascript library">D3.js</a>, I came up with this:</p>
+
+<div style="text-align:center;"><iframe scrolling="no" src="http://markdimarco.com/slope/index.html" frameborder="0" border="0" height="800" width="400"><a href="http://markdimarco.com/slope.html">http://markdimarco.com/slope.html</a></iframe></div>
+
+
+<p>If you can&#8217;t see the iframe above, <a href="http://markdimarco.com/slope/index.html">click here</a> for standalone version.</p>
+
+<p>As long as you are using a browser that supports SVG, you should see a nicely rendered version of Tufte&#8217;s original slope graph.</p>
+
+<p>In the future I&#8217;ll make a library version of this on top of D3.js to create custom slope graphs that retain Tufte&#8217;s original design.</p>
+
+<p>One of the coolest things about the original design, as noted by <a href="http://charliepark.org/slopegraphs/#the_tablegraphic" title="charlie park">Charlie Park</a>, is that there is <em>&#8220;absolutely zero non-data ink&#8221;</em>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[node.js, npm and executables]]></title>
+    <link href="http://markmarkoh.github.comnodejs-npm-and-executables"/>
+    <updated>2011-07-25T00:00:00-05:00</updated>
+    <id>http://markmarkoh.github.com./nodejs-npm-and-executables</id>
+    <content type="html"><![CDATA[<p>A great feature of node.js &amp; npm is the easy path to create executable, standalone programs.</p>
+
+<p>I&#8217;ll be using npm (1.0.22) and node (0.4.11), the dependency here is npm > 1.0. All of the source used can be found at</p>
+
+<p>first you want to create a package.json file for npm. This will let us specify executables and automatically install them to a user&#8217;s PATH.</p>
+
+<p>Example package.json:</p>
+
+<div><script src='https://gist.github.com/1106127.js?file='></script>
+<noscript><pre><code>  {
+    &quot;name&quot;: &quot;watch.js&quot;,
+    &quot;description&quot;: &quot;A script and stylesheet reloader. Less browser refreshing.&quot;,
+    &quot;version&quot;: &quot;0.0.5&quot;,
+    &quot;author&quot;: &quot;Mark DiMarco (@markmarkoh)&quot;,
+    &quot;engines&quot;: {
+        &quot;node&quot;: &quot;&gt;= 0.4.0&quot;
+    },
+    &quot;dependencies&quot;: {
+        &quot;socket.io&quot;: &quot;0.7.7&quot;
+    },
+    &quot;bin&quot;: {
+        &quot;watchjs&quot;: &quot;bin/watch.bin.js&quot;
+    }
+  }</code></pre></noscript></div>
+
+
+<p>Take a look at the &#8220;bin&#8221; property of that package.json.</p>
+
+<p>The key (&#8220;watchjs&#8221; in this example) will be the globally accessible name, so pick something custom that doesn&#8217;t already exist (like &#8220;rm&#8221; or &#8220;shutdown&#8221;).</p>
+
+<p>The value (&#8220;bin/watch.bin.js&#8221;) is a JS file I created that contains the source of the executable, which is just Javascript.</p>
+
+<p>Here is &#8220;bin/watch.bin.js&#8221;:</p>
+
+<div><script src='https://gist.github.com/1106131.js?file='></script>
+<noscript><pre><code>#!/usr/bin/env node
+var app = require('../watch');
+
+var static_dir = '.';
+
+if (process.argv.length &gt; 2) {
+    static_dir = process.argv[2];
+}
+
+app.init(static_dir);</code></pre></noscript></div>
+
+
+<p>My node app&#8217;s name is &#8220;watch&#8221; and it lives in the root directory of my repo, and it exports a function named &#8220;init&#8221; so that I can pass command line arguments into node.js.</p>
+
+<p>Now to test it all out:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; npm install . -g
+</span><span class='line'><span class="c">#check to see if everything is working</span>
+</span><span class='line'>&gt; watchjs
+</span><span class='line'>Starting server on... <span class="c">#great</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A quick note on the &#8220;-g&#8221; flag, which means &#8220;install globally&#8221;: If the sole purpose of your node.js application is to be run as an executable, it&#8217;s probably a good idea to use the &#8220;-g&#8221; flag so that the user can run the executable from anywhere on the file system, as opposed to just in the project directory you are in.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamic "table of contents" generation with jQuery]]></title>
+    <link href="http://markmarkoh.github.comdynamic-table-of-contents-generation-with-jquery"/>
+    <updated>2011-05-05T00:00:00-05:00</updated>
+    <id>http://markmarkoh.github.com./dynamic-table-of-contents-generation-with-jqu</id>
+    <content type="html"><![CDATA[<p>A quick way to generate a dynamic table of contents, based on the sections as they appear in the content.</p>
+
+<div><script src='https://gist.github.com/958465.js?file='></script>
+<noscript><pre><code>$(function() {
+
+    var tocWrapper = $(&quot;#toc .wrapper&quot;);
+
+    $(&quot;#mainContainer h1&quot;).each(function(i,item) {
+    
+        $(&quot;&lt;a /&gt;&quot;)
+            .text( $(item).text() )
+            .attr(&quot;href&quot;,&quot;#&quot;)
+            .data(&quot;scrollTo&quot;,item)
+            .appendTo(tocWrapper)
+    
+    });
+
+});
+
+$(&quot;#toc a&quot;).live(&quot;click&quot;, function(e) {
+
+    $.scrollTo( $(this).data(&quot;scrollTo&quot;), {
+        duration: 300,
+        easing: &quot;swing&quot;
+    });
+    
+    e.preventDefault();
+    
+});</code></pre></noscript></div>
+
+
+<p>The first block loops through all the section headers (which are <code>&lt;h1&gt;</code>s), and injects them as anchor tags into the initially empty TOC wrapper DIV.</p>
+
+<p><code>$("&lt;a/&gt;")</code> is sexy jQuery syntax to create a fresh DOM element.</p>
+
+<p><code>.data()</code> is a nice way to store metadata about a DOM element. It&#8217;s nice because it doesn&#8217;t store the data *in* the DOM, which is notoriously slow.</p>
+
+<p>The second block just adds the click handler and uses the $.scrollTo plugin for some fancy scrolling animation.</p>
+
+<p>It&#8217;s small, but neat, and it removes the need to maintain a duplicate list of section names.</p>
+
+<p>Originally found on <a href="http://taitems.github.com/Front-End-Development-Guidelines/">Frontend Dev Guidelines</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The 'I' that acts, the 'I' that thinks, the 'I' that studies itself]]></title>
+    <link href="http://markmarkoh.github.comthe-i-that-acts-the-i-that-thinks-the-i-that"/>
+    <updated>2011-01-19T00:00:00-06:00</updated>
+    <id>http://markmarkoh.github.com./the-i-that-acts-the-i-that-thinks-the-i-that</id>
+    <content type="html"><![CDATA[<blockquote><p>I start to think about my own thoughts of the situation in which I find myself. I even think that I think of it, and divide myself into an infinite retrogressive sequence of &#8220;I&#8217;s&#8221; who consider each other. I do not know at which &#8220;I&#8221; to stop as the actual, and in the moment I stop at one, there is indeed again an &#8220;I&#8221; which stops it. I become confused and feel a dizziness as if I were looking down into a bottomless abyss.</p></blockquote>
+
+
+<p><img class="[]" src="http://markmarkoh.github.com/images/308932_1939_Phyllis_Gordon_takes_her_pet_cheetah_shopping_in_London.jpg"></p>
+
+<p>Mixed quotes from Oppenheimer(title), and Niels Bohr quoting Moller. Photograph titled as1939 Phyllis Gordon takes her pet cheetah shopping in London</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Say 'No' to Javascript alert()]]></title>
+    <link href="http://markmarkoh.github.comsay-no-to-javascript-alert"/>
+    <updated>2010-10-30T00:00:00-05:00</updated>
+    <id>http://markmarkoh.github.com./say-no-to-javascript-alert</id>
+    <content type="html"><![CDATA[<p>I see too many people use <code>alert()</code> when smoke testing a web application when they should be using <code>console.log()</code> instead.</p>
+
+<p>Why should you prefer <code>console.log()</code> over the unmistakably obvious <code>alert()</code>?</p>
+
+<p>For starters, it doesn&#8217;t block the javascript thread, so your page will continue to load normally. It&#8217;s common to discover timing bugs when you&#8217;ve been relying on <code>alert()</code> in testing, and removing the call later on.</p>
+
+<p>Secondly, <code>console.log()</code> outputs to the consoles of many of the popular browsers, especially Chrome &amp; Firefox. (Tip: press CTRL+SHIFT+J in Chrome or use Firebug&#8217;s console in Firefox).</p>
+
+<p>The only gotchya when it comes to console.log if you&#8217;re not curently running the console, <code>window</code> has no property <code>console</code> and your script will error out. This is easily remedied by adding this line to the begining of your javascript heavy pages:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">||</span> <span class="p">{</span><span class="nx">log</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{},</span> <span class="nx">info</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{}};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will use a console if available, if not it will do nothing(more importantly, no errors).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Poor Man's Market Development ]]></title>
+    <link href="http://markmarkoh.github.comthe-poor-mans-market-development"/>
+    <updated>2010-09-02T00:00:00-05:00</updated>
+    <id>http://markmarkoh.github.com./the-poor-mans-market-development</id>
+    <content type="html"><![CDATA[<p>Generating leads and discovering market size while bootstrapping your startup can be a difficult and long-winded task. Discussed here is a lean, automated, and hopefully new technique to return actionable metrics.</p>
+
+<p>The first place I went to look for potential customers were companies and websites that were using one of my competitors products.<sup>1</sup></p>
+
+<p>While the technique I used to generate a list of these websites might only be specific to a small subset of web startups, you might be able to find some use out of it.</p>
+
+<p>In this case, my product was a javascript library that runs client side A/B tests, and my goal was to automate the creation of a list of all of my competitor’s clients.</p>
+
+<p>I started by finding a single client of each competitor. These can usually be found through case studies or testimonials on the competitor’s website. Upon visiting a client’s website, there is nothing too telling about their use of a javascript library. Certainly no text you can use in a Google query.</p>
+
+<p>Examining the source code is a different story. My competitors leave a certain signature inside the source of each of their clients web pages.</p>
+
+<p>Let’s take a look at the source of a client of Visual Website Optimizer named White Fence.<br/>
+<img src="http://markmarkoh.github.com/images/visualwebsite.png"></p>
+
+<p>The HTML comment tells me what I need to know to automate the process of discovering more clients:
+<code>&lt;!-- Start Top Visual Website Optimizer Code --&gt;</code></p>
+
+<p>Each of my competitors have a similar signature: SiteSpect, Google Website Optimizer, VWO, &amp; more.</p>
+
+<p>Most search engines won’t let you search the internet by HTML comments, so I used a service called <a href="http://80legs.com">80legs.com</a> and created my own search engine.
+80legs let’s you create web crawlers and process the results. The crawler works the same way Google’s and Yahoo’s does, traversing web page to web page by following HREFs based off of a seed list(an initial set of pages).</p>
+
+<p>I created a crawler and chose to analyze results by Regular Expressions. This will run RegEx on the source code returned by the crawler, not just the content meant for human.</p>
+
+<p><img class="[]" src="http://markmarkoh.github.com/images/80legsregex.png"></p>
+
+<p>The RegEx searches each page for one of the HTML comment signatures used by my competitors. The results? A list of thousands of websites per competitor, all guaranteed to be actively using a competitors product.</p>
+
+<p>This technique can be used by some as a poor man’s market development. A free way to gauge the size of a market, reach of a competitor and possibly some cold-call sales.</p>
+
+<p><sup>1</sup>I&#8217;m not insinuating that this is the best type of potential customer.</p>
+]]></content>
+  </entry>
+  
+</feed>

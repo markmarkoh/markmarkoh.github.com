@@ -1,0 +1,233 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WIP URL managed, state-based single page applications with Ember.js & Director. - Mark Mark Oh</title>
+    <meta name="author" content="Mark DiMarco">
+
+    
+    <meta name="description" content="WIP URL Managed, State-based Single Page Applications With Ember.js & Director. Update: This is soon-to-be deprecated due to Ember.Router! Check out &hellip;">
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Mark Mark Oh" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.png" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18243508-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<header class="inner"><div class="left">
+	<h1 class="left"><a href="/">Mark Mark Oh</a></h1><br />
+	<h3 class="left"><a href="/about-me">UI Developer at Bazaarvoice</a></h3>
+</div>
+<nav class="menu left"><ul class="main">
+	<li><a href="/about-me">About me</a></li>
+</ul>
+</nav>
+<div class="right">
+	<div class="social right">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/markmarkoh" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/markmarkoh" title="GitHub">GitHub</a>
+		
+	</div>
+</div>
+</header>
+	
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/markmarkoh">markmarkoh</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('markmarkoh', 4, false);
+	})(jQuery);
+</script>
+
+	<div id="content" class="inner"><article class="post">
+    <h1 class="title">WIP URL Managed, State-based Single Page Applications With Ember.js & Director.</h1>
+    <div class="entry"><h3>Update: This is soon-to-be deprecated due to Ember.Router!</h3>
+
+<p><a href="/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+
+<p> One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ).</p>
+
+<p> Outlined here is an architecture to maintain distinct URLs with Ember.js applications.</p>
+
+<h2>Director</h2>
+
+<p><a href="http://flatironjs.org/" title="flatiron">Director</a>, part of Nodejitsu&#8217;s Flatiron framework, is a URL routing library that is capable of running in the browser. It uses hashChange ( and soon, pushState ) to change URLs and execute the appropriate Javascript. Perfect for single paged apps.</p>
+
+<p>If you&#8217;ve used Django (urls.py), Sinatra, Rails, Express for Node - this should look familiar. Keep in mind it&#8217;s running in the browser.</p>
+
+<div><script src='https://gist.github.com/2341574.js?file='></script>
+<noscript><pre><code>    /* Director's routes config
+
+      routes that have segments that start with colons, 
+      like /lists/:listType, will pass in the variable to
+      the callback.
+    */
+
+    var routes = {
+      '/app': function() {
+        ;
+      },
+
+      '/app/lists/:listType': function( listType ) {
+        ;
+      },
+
+      // example of a more complicated route.
+      'app/lists/:listType/page/:pageNumber': function( listType, pageNumber ) {
+        ;
+      }
+    };
+
+
+    //configure and init our Director Router
+    var router = Router( routes ).configure();
+    router.init();</code></pre></noscript></div>
+
+
+<h2>Ember</h2>
+
+<p><a href="http://emberjs.com" title="ember js">Ember.js</a> is a project run by Tom Dale and Yehuda Katz. It&#8217;s a client-side MVC framework - the benefits of using Ember.js (or Backbone.js) go beyond the scope of this article.</p>
+
+<p>One of Ember.js&#8217;s most useful, yet least documented features, is Ember.StateManager.</p>
+
+<p>Ember.StateManager is easy to use - you need a rootElement (defaults to <code>body</code>) and a few distinct <code>Ember.ViewStates</code>, which at their simplest - just need a <code>Ember.View</code>.</p>
+
+<p>Switching between states will remove the <code>currentState</code> view, and insert the new state&#8217;s view, and run appropriate <code>enter</code>/<code>exit</code> events if you wanted.</p>
+
+<p><code>Ember.StateManager.goToState ( strStateName )</code> if enough to switch the state. Pretty easy.</p>
+
+<div><script src='https://gist.github.com/2341576.js?file='></script>
+<noscript><pre><code>    /* Instantiate a StateManager for our application
+       and give it a few example states. 
+    */
+    App.stateManager = Ember.StateManager.create({
+
+      //Swap state within this element
+      rootElement: &quot;#appRoot&quot;,
+
+      //specify a few sample states
+      overview: Ember.ViewState.create({
+          view: App.Overview
+      }),
+
+      highestRated: Ember.ViewState.create({
+          view: App.HighestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy( App.productList.content, function( product ) { return 0 - product.rating })
+            )
+          }
+      }),
+
+      lowestRated: Ember.ViewState.create({
+          view: App.LowestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy(App.productList.content, function( product ) { return product.rating })
+            )
+          }
+      })
+    });</code></pre></noscript></div>
+
+
+<h2>Hijack</h2>
+
+<p>Hijacker takes a jQuery Anchor tag selector (e.g. <code>.container a[href]</code>), and &#8220;hijacks&#8221; click events to push the new URL into Director instead of allowing a page jump.</p>
+
+<p>This let&#8217;s us keep our markup semantically pure - we don&#8217;t have to add click handlers everywhere, just classic <code>&lt;a href="/product/10101/"&gt;Product 10101&lt;/a&gt;</code>. Perfect for porting an existing application.</p>
+
+<h2>All together</h2>
+
+<p>A user clicks a link - Director changes the URL and runs a callback that updates Ember&#8217;s current state.</p>
+
+<p>Now that user can refresh the page, or share the link, and the app <strong>follows the same path as it did when somebody clicked a link</strong>.</p>
+
+<p>Effectively, URLs are controlling the state of our application, not click events.</p>
+
+<p><a href="/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+
+<p><em>Notes: I used Director instead of an user contributed addon, SproutCore Routes, because I wanted to keep my URL routing and application decoupled. Checkout Sproutcore Routes if you&#8217;d rather use that.</em></p>
+</div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-08T23:11:00-05:00" pubdate data-updated="true">Apr 8<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+</div>
+        
+    </div>
+</article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4eb4a0c47196e907"></script>
+</div>
+</div>
+	<footer class="inner">Copyright &copy; 2012 Mark Mark Oh</footer>
+	<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

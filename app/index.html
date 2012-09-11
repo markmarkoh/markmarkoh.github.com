@@ -1,0 +1,283 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Single page application with Ember.js, Director and Hijack</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="/app/css/bootstrap.css">
+  <link rel="stylesheet" href="/app/css/bootstrap-responsive.css">
+
+  <style> 
+  #app { min-height: 450px;}
+  </style>
+  <script src="/app/js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+<body class="container-fluid">
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+        <a class="brand"> A single page app architecture with Ember.js, Director and Hijack </a>
+      </div>
+    </div>
+  </div>
+  </header>
+  <div role="main" id="app">
+    <div class="row-fluid show-grid">
+      <div class="span4">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="overview">
+            <a href="/"><i class="icon-home"></i> Overview</a>
+          </li>
+          <li class="highestRated">
+            <a href="/lists/highestRated"><i class="icon-heart"></i> Highest Rated Products</a>
+          </li>
+          <li class="lowestRated">
+            <a href="/lists/lowestRated"><i class="icon-fire"></i> Lowest Rated Products</a>
+          </li>
+        </ul>
+      </div>
+      <div class="span7 well" id="appRoot">
+      </div>
+    </div>
+  </div>
+  <hr />
+  <footer>
+    <ul>
+      <li>Clicking the left nav updates the URL and the Ember app's state. 
+      <li>Refreshing the page (or sharing the link) brings you back to that state (based on the URL).
+      <li>Tested on <abbr title="or something">Chrome 45</abbr> and Firefox 11 on a Mac</li>
+    </ul>
+
+  </footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+
+
+  <script src="/app/js/libs/underscore.js"></script>
+  <script src="/app/js/libs/director.js"></script>
+  <script src="/app/js/libs/hijack.js"></script>
+  <script src="/app/js/libs/ember.js"></script>
+
+  <!-- Start Sample Ember App -->
+  <script>
+  $(function() {
+    App = Ember.Application.create({});
+
+
+    /* Add some sample data to bind to */
+    App.productList = Ember.ArrayProxy.create({
+      content: []
+    });
+
+    App.productList.pushObjects([
+      {name: "Washing machine", rating: 4.5},
+      {name: "Blow Dryer", rating: 3.5},
+      {name: "Laptop", rating: 4.9},
+      {name: "Microwave Oven", rating: 2.7},
+      {name: "Lawn Mower", rating: 5.0}
+    ]);
+
+
+    /* A few example Ember Views.
+       These are not attached to any state yet.
+    */
+    App.Overview = Ember.View.extend({
+      templateName: "overview",
+
+      contentBinding: "App.productList",
+
+      productListLength: function() {
+        return this.getPath( 'content.content' ).length;
+      }.property( 'content' )
+    });
+
+    App.HighestRated = Ember.View.extend({
+      templateName: "highestRated",
+      contentBinding: "App.productList"
+    });
+
+    App.LowestRated = Ember.View.extend({
+      templateName: "lowestRated",
+      contentBinding: "App.productList"
+    });
+
+
+    /* Instantiate a StateManager for our application
+       and give it a few example states. 
+    */
+    App.stateManager = Ember.StateManager.create({
+
+      //Swap state within this element
+      rootElement: "#appRoot",
+
+      //specify a few sample states
+      overview: Ember.ViewState.create({
+          view: App.Overview
+      }),
+
+      highestRated: Ember.ViewState.create({
+          view: App.HighestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy( App.productList.content, function( product ) { return 0 - product.rating })
+            )
+          }
+      }),
+
+      lowestRated: Ember.ViewState.create({
+          view: App.LowestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy(App.productList.content, function( product ) { return product.rating })
+            )
+          }
+      })
+    });
+
+
+    /* set the hash in case there isn't one
+       not necessary for a pushState implementation
+       but this is a hashChange version.
+     */
+    if (window.location.hash === "") {
+        window.location.hash = "#/";
+    }
+
+
+    /* Director's routes config
+
+      routes that have segments that start with colons, 
+      like /lists/:listType, will pass in the variable to
+      the callback.
+    */
+
+    var routes = {
+      '/': function() {
+        
+        App.stateManager.goToState( "overview" ); 
+
+        $(".active").removeClass( "active" );
+        $(".nav-pills li.overview").addClass( "active" );
+      },
+
+      '/lists/:listType': function( listType ) {
+        App.stateManager.goToState( listType );
+
+        $(".active").removeClass( "active" );
+        $( ".nav-pills li." + listType ).addClass( "active" );
+      },
+
+      // example of a more complicated route.
+      '/lists/:listType/page/:pageNumber': function( listType, pageNumber ) {
+        return;
+      }
+    };
+
+
+    //configure and init our Director Router
+    var router = Router( routes ).configure();
+    router.init();
+
+    /* initial our Hijack library.
+       only hijack links that match the selector #app a[href]
+       example:
+        <div id="app"><span><a href="/catchme">hijack me</a></span></div>
+
+        but not:
+        <div id="copyright"><span><a href="/contact">Contact Us</a></span></div>
+        <div id="app"><span><a>leave me alone, I have no href</a></span></div>
+    */
+
+    hijack.init( router, { linkSelector: '#app a[href]'} );
+  });
+  </script>
+  <!-- End Ember App -->
+
+
+
+
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+
+
+    <!-- Start Ember Templates -->
+  <script type="text/x-handlebars" id="overview">
+    <h1>Overview</h1>
+    <hr />
+
+    <h2>Total number of products: {{productListLength}}</h2>
+
+  </script>
+
+  <script type="text/x-handlebars" id="highestRated">
+    <h1>Highest Rated Products</h1>
+    <hr />
+    <table class="table table-striped">
+      <thead>
+        <tr> 
+          <th>
+            Product Name 
+          </th>
+          <th>
+            Rating
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each content}}
+        <tr>
+         <td>{{name}}</td>
+         <td>{{rating}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/x-handlebars" id="lowestRated">
+    <h1>Lowest Rated Products</h1>
+    <hr />
+    <table class="table table-striped">
+      <thead>
+        <tr> 
+          <th>
+            Product Name 
+          </th>
+          <th>
+            Rating
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each content}}
+        <tr>
+         <td>{{name}}</td>
+         <td>{{rating}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </script>
+  <!-- End Ember Templates -->
+</body>
+</html>
