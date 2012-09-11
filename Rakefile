@@ -224,9 +224,12 @@ task :gen_deploy => [:integrate, :generate, :deploy] do
 end
 
 desc "copy dot files for deployment"
-task :copydot, :source, :dest do |t, args|
-  FileList["#{args.source}/**/.*"].exclude("**/.", "**/..", "**/.DS_Store", "**/._*").each do |file|
-    cp_r file, file.gsub(/#{args.source}/, "#{args.dest}") unless File.directory?(file)
+task :copydot do
+  exclusions = [".", "..", ".DS_Store"]
+  Dir["#{source_dir}/**/.*"].each do |file|
+    if (!File.directory?(file) && exclusions.include?(file))
+      cp(file, file.gsub(/#{source_dir}/, "#{public_dir}"));
+    end
   end
 end
 
