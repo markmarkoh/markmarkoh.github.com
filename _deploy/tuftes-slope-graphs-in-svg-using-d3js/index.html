@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Tufte's slope graphs in SVG using D3.js - Mark DiMarco</title>
+  <meta name="author" content="Mark DiMarco">
+
+  
+  <meta name="description" content="There was recently some buzz regarding a graph invented by one of the godfathers of visualizations, Edward Tufte, in the iconic 1983 book &#8217;The &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://markmarkoh.github.comtuftes-slope-graphs-in-svg-using-d3js">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mark DiMarco" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18243508-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">markmarkoh</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Mark DiMarco</a></h1>
+  
+    <h2>UI Developer at Bazaarvoice</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:markmarkoh.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">Tufte's Slope Graphs in SVG Using D3.js</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-04T00:00:00-05:00" pubdate data-updated="true">Aug 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There was recently some buzz regarding a graph invented by one of the godfathers of visualizations, Edward Tufte, in the iconic 1983 book &#8217;<a href="http://www.edwardtufte.com/tufte/books_vdqi" title="visual display of quantitative information">The Visual Display of Quantitative Information</a>&#8217; (p. 158).</p>
+
+<p>You can see a <a href="http://charliepark.org/slopegraphs/#the_tablegraphic" title="charlie park's slope graphs">scanned copy of the graph here</a>, along with an interesting discussion regarding the chart, it&#8217;s history and different versions of it.</p>
+
+<p>I decided to recreate the graph dynamically for the browser using an SVG, which is something you&#8217;ll need a semi-advanced browser to see. With a library named <a href="http://mbostock.github.com/d3/" title="d3.js svg javascript library">D3.js</a>, I came up with this:</p>
+
+<div style="text-align:center;"><iframe scrolling="no" src="http://markdimarco.com/slope/index.html" frameborder="0" border="0" height="800" width="400"><a href="http://markdimarco.com/slope.html">http://markdimarco.com/slope.html</a></iframe></div>
+
+
+<p>If you can&#8217;t see the iframe above, <a href="http://markdimarco.com/slope/index.html">click here</a> for standalone version.</p>
+
+<p>As long as you are using a browser that supports SVG, you should see a nicely rendered version of Tufte&#8217;s original slope graph.</p>
+
+<p>In the future I&#8217;ll make a library version of this on top of D3.js to create custom slope graphs that retain Tufte&#8217;s original design.</p>
+
+<p>One of the coolest things about the original design, as noted by <a href="http://charliepark.org/slopegraphs/#the_tablegraphic" title="charlie park">Charlie Park</a>, is that there is <em>&#8220;absolutely zero non-data ink&#8221;</em>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mark DiMarco</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-04T00:00:00-05:00" pubdate data-updated="true">Aug 4<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://markmarkoh.github.comtuftes-slope-graphs-in-svg-using-d3js" data-via="markmarkoh" data-counturl="http://markmarkoh.github.comtuftes-slope-graphs-in-svg-using-d3js" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="nodejs-npm-and-executables" title="Previous Post: node.js, npm and executables">&laquo; node.js, npm and executables</a>
+      
+      
+        <a class="basic-alignment right articlenav" href="/blog/url-managed/" title="Next Post: WIP URL managed, state-based single page applications with Ember.js & Director.">WIP URL managed, state-based single page applications with Ember.js & Director. &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/d3-dot-js-animated-map-visualization/">D3.js animated map visualization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/jquery-live-gotchya/">jQuery .live() gotchya</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/url-managed/">WIP URL managed, state-based single page applications with Ember.js & Director.</a>
+      </li>
+    
+      <li class="post">
+        <a href="tuftes-slope-graphs-in-svg-using-d3js">Tufte's slope graphs in SVG using D3.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="nodejs-npm-and-executables">node.js, npm and executables</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/markmarkoh">@markmarkoh</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'markmarkoh',
+            count: 9,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("markmarkoh", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/markmarkoh" class="twitter-follow-button" data-show-count="false">Follow @markmarkoh</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mark DiMarco -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

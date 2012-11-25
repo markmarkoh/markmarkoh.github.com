@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>WIP URL managed, state-based single page applications with Ember.js & Director. - Mark DiMarco</title>
+  <meta name="author" content="Mark DiMarco">
+
+  
+  <meta name="description" content="Update: This is soon-to-be deprecated due to Ember.Router! Check out the sample application, and source on github. One of the drawbacks of single &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://markmarkoh.github.com/blog/url-managed/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mark DiMarco" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18243508-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">markmarkoh</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Mark DiMarco</a></h1>
+  
+    <h2>UI Developer at Bazaarvoice</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:markmarkoh.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">WIP URL Managed, State-based Single Page Applications With Ember.js & Director.</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-08T23:11:00-05:00" pubdate data-updated="true">Apr 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Update: This is soon-to-be deprecated due to Ember.Router!</h3>
+
+<p><a href="/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+
+<p> One of the drawbacks of single paged apps is when you no longer depend on distinct URLs for each of the pages - URLs get dropped in favor of hosting the entire app under one root URL ( http://example.com/app ).</p>
+
+<p> Outlined here is an architecture to maintain distinct URLs with Ember.js applications.</p>
+
+<h2>Director</h2>
+
+<p><a href="http://flatironjs.org/" title="flatiron">Director</a>, part of Nodejitsu&#8217;s Flatiron framework, is a URL routing library that is capable of running in the browser. It uses hashChange ( and soon, pushState ) to change URLs and execute the appropriate Javascript. Perfect for single paged apps.</p>
+
+<p>If you&#8217;ve used Django (urls.py), Sinatra, Rails, Express for Node - this should look familiar. Keep in mind it&#8217;s running in the browser.</p>
+
+<div><script src='https://gist.github.com/2341574.js?file='></script>
+<noscript><pre><code>    /* Director's routes config
+
+      routes that have segments that start with colons, 
+      like /lists/:listType, will pass in the variable to
+      the callback.
+    */
+
+    var routes = {
+      '/app': function() {
+        ;
+      },
+
+      '/app/lists/:listType': function( listType ) {
+        ;
+      },
+
+      // example of a more complicated route.
+      'app/lists/:listType/page/:pageNumber': function( listType, pageNumber ) {
+        ;
+      }
+    };
+
+
+    //configure and init our Director Router
+    var router = Router( routes ).configure();
+    router.init();</code></pre></noscript></div>
+
+
+<h2>Ember</h2>
+
+<p><a href="http://emberjs.com" title="ember js">Ember.js</a> is a project run by Tom Dale and Yehuda Katz. It&#8217;s a client-side MVC framework - the benefits of using Ember.js (or Backbone.js) go beyond the scope of this article.</p>
+
+<p>One of Ember.js&#8217;s most useful, yet least documented features, is Ember.StateManager.</p>
+
+<p>Ember.StateManager is easy to use - you need a rootElement (defaults to <code>body</code>) and a few distinct <code>Ember.ViewStates</code>, which at their simplest - just need a <code>Ember.View</code>.</p>
+
+<p>Switching between states will remove the <code>currentState</code> view, and insert the new state&#8217;s view, and run appropriate <code>enter</code>/<code>exit</code> events if you wanted.</p>
+
+<p><code>Ember.StateManager.goToState ( strStateName )</code> if enough to switch the state. Pretty easy.</p>
+
+<div><script src='https://gist.github.com/2341576.js?file='></script>
+<noscript><pre><code>    App.stateManager = Ember.StateManager.create({
+
+      //Swap state within this element
+      rootElement: &quot;#appRoot&quot;,
+
+      //Simple State
+      overview: Ember.ViewState.create({
+          view: App.Overview
+      }),
+
+      //More Advanced State
+      highestRated: Ember.ViewState.create({
+          view: App.HighestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy( App.productList.content, function( product ) { return 0 - product.rating })
+            )
+          }
+      })
+    });
+
+
+  //Usage
+  App.stateManager.goToState( 'overview' );
+
+  App.stateManager.currentState.name === 'overview';</code></pre></noscript></div>
+
+
+<h2>Hijack</h2>
+
+<p>Hijacker takes a jQuery Anchor tag selector (e.g. <code>.container a[href]</code>), and &#8220;hijacks&#8221; click events to push the new URL into Director instead of allowing a page jump.</p>
+
+<p>This let&#8217;s us keep our markup semantically pure - we don&#8217;t have to add click handlers everywhere, just classic <code>&lt;a href="/product/10101/"&gt;Product 10101&lt;/a&gt;</code>. Perfect for porting an existing application.</p>
+
+<h2>All together</h2>
+
+<p>A user clicks a link - Director changes the URL and runs a callback that updates Ember&#8217;s current state.</p>
+
+<p>Now that user can refresh the page, or share the link, and the app <strong>follows the same path as it did when somebody clicked a link</strong>.</p>
+
+<p>Effectively, URLs are controlling the state of our application, not click events.</p>
+
+<p><a href="/app/#/" title="demo application">Check out the sample application</a>, and <a href="https://github.com/markmarkoh/single_page_demo" title="single page demo repo">source on github</a>.</p>
+
+<p><em>Notes: I used Director instead of an user contributed addon, SproutCore Routes, because I wanted to keep my URL routing and application decoupled. Checkout Sproutcore Routes if you&#8217;d rather use that.</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mark DiMarco</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-08T23:11:00-05:00" pubdate data-updated="true">Apr 8<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://markmarkoh.github.com/blog/url-managed/" data-via="markmarkoh" data-counturl="http://markmarkoh.github.com/blog/url-managed/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="tuftes-slope-graphs-in-svg-using-d3js" title="Previous Post: Tufte's slope graphs in SVG using D3.js">&laquo; Tufte's slope graphs in SVG using D3.js</a>
+      
+      
+        <a class="basic-alignment right articlenav" href="/blog/jquery-live-gotchya/" title="Next Post: jQuery .live() gotchya">jQuery .live() gotchya &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/d3-dot-js-animated-map-visualization/">D3.js animated map visualization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/jquery-live-gotchya/">jQuery .live() gotchya</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/url-managed/">WIP URL managed, state-based single page applications with Ember.js & Director.</a>
+      </li>
+    
+      <li class="post">
+        <a href="tuftes-slope-graphs-in-svg-using-d3js">Tufte's slope graphs in SVG using D3.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="nodejs-npm-and-executables">node.js, npm and executables</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/markmarkoh">@markmarkoh</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'markmarkoh',
+            count: 9,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("markmarkoh", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/markmarkoh" class="twitter-follow-button" data-show-count="false">Follow @markmarkoh</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mark DiMarco -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

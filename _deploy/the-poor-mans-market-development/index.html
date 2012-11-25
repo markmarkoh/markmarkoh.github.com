@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Poor Man's Market Development  - Mark DiMarco</title>
+  <meta name="author" content="Mark DiMarco">
+
+  
+  <meta name="description" content="Generating leads and discovering market size while bootstrapping your startup can be a difficult and long-winded task. Discussed here is a lean, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://markmarkoh.github.comthe-poor-mans-market-development">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mark DiMarco" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18243508-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">markmarkoh</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Mark DiMarco</a></h1>
+  
+    <h2>UI Developer at Bazaarvoice</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:markmarkoh.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">The Poor Man's Market Development</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-02T00:00:00-05:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Generating leads and discovering market size while bootstrapping your startup can be a difficult and long-winded task. Discussed here is a lean, automated, and hopefully new technique to return actionable metrics.</p>
+
+<p>The first place I went to look for potential customers were companies and websites that were using one of my competitors products.<sup>1</sup></p>
+
+<p>While the technique I used to generate a list of these websites might only be specific to a small subset of web startups, you might be able to find some use out of it.</p>
+
+<p>In this case, my product was a javascript library that runs client side A/B tests, and my goal was to automate the creation of a list of all of my competitor’s clients.</p>
+
+<p>I started by finding a single client of each competitor. These can usually be found through case studies or testimonials on the competitor’s website. Upon visiting a client’s website, there is nothing too telling about their use of a javascript library. Certainly no text you can use in a Google query.</p>
+
+<p>Examining the source code is a different story. My competitors leave a certain signature inside the source of each of their clients web pages.</p>
+
+<p>Let’s take a look at the source of a client of Visual Website Optimizer named White Fence.<br/>
+<img src="/images/visualwebsite.png"></p>
+
+<p>The HTML comment tells me what I need to know to automate the process of discovering more clients:
+<code>&lt;!-- Start Top Visual Website Optimizer Code --&gt;</code></p>
+
+<p>Each of my competitors have a similar signature: SiteSpect, Google Website Optimizer, VWO, &amp; more.</p>
+
+<p>Most search engines won’t let you search the internet by HTML comments, so I used a service called <a href="http://80legs.com">80legs.com</a> and created my own search engine.
+80legs let’s you create web crawlers and process the results. The crawler works the same way Google’s and Yahoo’s does, traversing web page to web page by following HREFs based off of a seed list(an initial set of pages).</p>
+
+<p>I created a crawler and chose to analyze results by Regular Expressions. This will run RegEx on the source code returned by the crawler, not just the content meant for human.</p>
+
+<p><img class="[]" src="/images/80legsregex.png"></p>
+
+<p>The RegEx searches each page for one of the HTML comment signatures used by my competitors. The results? A list of thousands of websites per competitor, all guaranteed to be actively using a competitors product.</p>
+
+<p>This technique can be used by some as a poor man’s market development. A free way to gauge the size of a market, reach of a competitor and possibly some cold-call sales.</p>
+
+<p><sup>1</sup>I&#8217;m not insinuating that this is the best type of potential customer.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mark DiMarco</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-02T00:00:00-05:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2010</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://markmarkoh.github.comthe-poor-mans-market-development" data-via="markmarkoh" data-counturl="http://markmarkoh.github.comthe-poor-mans-market-development" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right articlenav" href="say-no-to-javascript-alert" title="Next Post: Say 'No' to Javascript alert()">Say 'No' to Javascript alert() &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/d3-dot-js-animated-map-visualization/">D3.js animated map visualization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/jquery-live-gotchya/">jQuery .live() gotchya</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/url-managed/">WIP URL managed, state-based single page applications with Ember.js & Director.</a>
+      </li>
+    
+      <li class="post">
+        <a href="tuftes-slope-graphs-in-svg-using-d3js">Tufte's slope graphs in SVG using D3.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="nodejs-npm-and-executables">node.js, npm and executables</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/markmarkoh">@markmarkoh</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'markmarkoh',
+            count: 9,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("markmarkoh", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/markmarkoh" class="twitter-follow-button" data-show-count="false">Follow @markmarkoh</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mark DiMarco -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
