@@ -4,7 +4,7 @@
   <title><![CDATA[Mark DiMarco]]></title>
   <link href="http://markmarkoh.github.com/atom.xml" rel="self"/>
   <link href="http://markmarkoh.github.com/"/>
-  <updated>2012-11-24T19:08:59-06:00</updated>
+  <updated>2012-11-24T19:19:25-06:00</updated>
   <id>http://markmarkoh.github.com/</id>
   <author>
     <name><![CDATA[Mark DiMarco]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[new-post]]></title>
+    <link href="http://markmarkoh.github.com/blog/new-post/"/>
+    <updated>2012-11-24T19:18:00-06:00</updated>
+    <id>http://markmarkoh.github.com/blog/new-post</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[D3.js animated map visualization]]></title>
