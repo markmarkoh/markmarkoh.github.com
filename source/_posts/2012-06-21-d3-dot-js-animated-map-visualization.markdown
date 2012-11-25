@@ -11,7 +11,7 @@ When you walk into [Bazaarvoice][2]'s office in Austin, TX, you can't miss a gia
 
 Part of that display is an SVG map of the world using [D3.js][0] (&hearts; d3.geo), and all day long we're watching it connect the people that ask questions on our client's sites to the people that answer them.
 
-The map I made takes a series of data, including the time and geolocations of the questioners and answerers. I animate an arc connecting to connect the two points. 
+The visualization we made takes a series of data, including the time and geolocations of the questioners and answerers. I animate an arc connecting to connect the two points. 
 
 <iframe src="http://player.vimeo.com/video/44433253" width="500" height="231" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
