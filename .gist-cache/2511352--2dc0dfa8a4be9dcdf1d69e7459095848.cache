@@ -1,0 +1,18 @@
+// $.fn.live misuse
+(function() {
+
+// cache all elements that match this selector *as they exist on the page right now*
+
+// let's say this is empty at this point in time
+var $posts = $(".posts");
+
+// set up a click listener. this is totally valid with $.fn.live, 
+// any new ".posts" that get added to the DOM will automatically respond to this 
+$posts.live('click', function() {
+
+   //update all the HTML of all the ".posts", this selector is still *EMPTY*
+   $posts.html("this doesn't work the way you might expect");
+
+});
+
+})();

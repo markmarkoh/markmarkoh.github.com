@@ -1,0 +1,15 @@
+  {
+    "name": "watch.js",
+    "description": "A script and stylesheet reloader. Less browser refreshing.",
+    "version": "0.0.5",
+    "author": "Mark DiMarco (@markmarkoh)",
+    "engines": {
+        "node": ">= 0.4.0"
+    },
+    "dependencies": {
+        "socket.io": "0.7.7"
+    },
+    "bin": {
+        "watchjs": "bin/watch.bin.js"
+    }
+  }

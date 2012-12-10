@@ -1,0 +1,31 @@
+    App.stateManager = Ember.StateManager.create({
+
+      //Swap state within this element
+      rootElement: "#appRoot",
+
+      //Simple State
+      overview: Ember.ViewState.create({
+          view: App.Overview
+      }),
+
+      //More Advanced State
+      highestRated: Ember.ViewState.create({
+          view: App.HighestRated,
+
+          //when entering this state
+          enter: function( stateManager ) {
+            this._super( stateManager );
+
+            //silly sort content
+            App.productList.set('content',
+              _.sortBy( App.productList.content, function( product ) { return 0 - product.rating })
+            )
+          }
+      })
+    });
+
+
+  //Usage
+  App.stateManager.goToState( 'overview' );
+
+  App.stateManager.currentState.name === 'overview';

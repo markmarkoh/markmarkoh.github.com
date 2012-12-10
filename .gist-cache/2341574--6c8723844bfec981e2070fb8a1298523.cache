@@ -1,0 +1,26 @@
+    /* Director's routes config
+
+      routes that have segments that start with colons, 
+      like /lists/:listType, will pass in the variable to
+      the callback.
+    */
+
+    var routes = {
+      '/app': function() {
+        ;
+      },
+
+      '/app/lists/:listType': function( listType ) {
+        ;
+      },
+
+      // example of a more complicated route.
+      'app/lists/:listType/page/:pageNumber': function( listType, pageNumber ) {
+        ;
+      }
+    };
+
+
+    //configure and init our Director Router
+    var router = Router( routes ).configure();
+    router.init();

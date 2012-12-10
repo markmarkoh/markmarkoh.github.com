@@ -1,0 +1,30 @@
+(function(window) {
+  var data,
+      xy = d3
+            .geo
+            .equirectangular()
+            .scale($('#map_container').width())
+            .translate([$('#map_container').width() / 2, $('#map_container').height() / 2]),
+      path = d3
+              .geo
+              .path()
+              .projection(xy),
+      svg = d3
+              .select('#map_container')
+              .append('svg:svg'),
+      countries = svg
+                    .append('svg:g')
+                    .attr('id', 'countries');
+
+
+  /* World Map */
+  countries.selectAll('path')
+    .data(window.countries_data.features) // get the data here: https://gist.github.com/2969317
+    .enter()
+    .append('svg:path')
+    .attr('d', path)
+   .attr('fill', 'rgba(29,91,85,1)')
+   .attr('stroke', 'rgba(29,91,85,1)')
+   .attr('stroke-width', 1);
+
+}(this);
